@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,14 +14,24 @@ public class PlayerController : Singleton<PlayerController>
     public void Init()
     {
         m_camera = new PlayerCamera(GameObject.Find("Player").transform
-            , GameObject.Find("CameraVerticalHandler").transform);
+            , GameObject.Find("CameraVerticalHandler").transform, GameObject.Find("CameraBob").transform);
         m_player_movement = GameObject.Find("Player").GetComponent<Movement>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void Update(float delta)
     {
-        m_camera.Update(delta);
+        float mutiplier = m_player_movement.Velocity.magnitude / 5.0f;
+
+        float fre_mul = 0.0f;
+        if (m_player_movement.Velocity.magnitude > m_player_movement.max_run_speed - 0.5f)
+            fre_mul = m_player_movement.max_run_speed / 5.0f;
+        else if (m_player_movement.Velocity.magnitude > m_player_movement.max_walk_speed - 0.5f)
+            fre_mul = m_player_movement.max_walk_speed / 5.0f;
+        else if (m_player_movement.Velocity.magnitude > m_player_movement.max_crouch_speed - 0.5f)
+            fre_mul = m_player_movement.max_crouch_speed / 5.0f;
+
+        m_camera.Update(delta, mutiplier, fre_mul);
         HandlerPlayerMove(delta);
     }
 

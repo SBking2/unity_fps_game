@@ -17,17 +17,21 @@ public class PlayerCamera
     private float m_camera_vertical_angle;
     private Vector2 m_mouse_delta;
 
-    public PlayerCamera(Transform player_transform, Transform camera_vertical_transform)
+    private CameraBob m_camera_bob;
+
+    public PlayerCamera(Transform player_transform, Transform camera_vertical_transform, Transform camera_bob)
     {
+        m_camera_bob = new CameraBob(camera_bob, camera_vertical_transform);
         m_player_transform = player_transform;
         m_camera_vertical_handler = camera_vertical_transform;
         m_sensity = 10.0f;
         m_camera_vertical_limit = new Vector2(-85, 85);
     }
 
-    public void Update(float delta)
+    public void Update(float delta, float amp_multiplier, float fre_multiplier)
     {
         HandleCamera(delta);
+        m_camera_bob.Update(delta, amp_multiplier, fre_multiplier);
     }
     private void HandleCamera(float delta)
     {

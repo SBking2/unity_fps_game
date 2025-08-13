@@ -44,12 +44,24 @@ public class Movement : MonoBehaviour
     private Vector3 m_move_direct;
     private Vector3 m_slope_normal;
     private float m_limit_speed;
+    private float m_jump_cd = 0.15f;
+    private float m_jump_timer;     //离开地面多久之后仍能跳跃
     private bool m_IsCrouchSignal;
     private bool m_IsRunSignal;
+    private bool m_IsCanJump;
+    private bool m_IsJumping;
 
     public bool IsGround { get; private set; }
     public bool IsSlope { get; private set; }
     public bool IsCroch { get; private set; }
+    public Vector3 Velocity
+    {
+        get
+        {
+            Vector3 velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
+            return velocity;
+        }
+    }
 
     /// <summary>
     /// 是否头顶天花板
@@ -67,6 +79,8 @@ public class Movement : MonoBehaviour
 
     private void Update()
     {
+        float delta = Time.deltaTime;
+
         if(IsGround)
         {
             m_rigidbody.drag = ground_drag;
@@ -74,6 +88,16 @@ public class Movement : MonoBehaviour
         {
             m_rigidbody.drag = 0.0f;
         }
+
+        if(!IsGround)
+        {
+            m_jump_timer += delta;
+            if (m_jump_timer >= m_jump_cd) m_IsCanJump = false;
+        }else
+        {
+            m_jump_timer = 0.0f;
+        }
+
         GroundCheck();
         SlopeCheck();
         CeilingCheck();
@@ -119,7 +143,7 @@ public class Movement : MonoBehaviour
 
         //速度限制
         Vector3 velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
-        if(m_debugger != null)  m_debugger.Refreash(m_rigidbody.velocity.magnitude);
+        if(m_debugger != null)  m_debugger.Refreash(velocity.magnitude);
         
         if (velocity.magnitude > m_limit_speed)
         {
@@ -166,6 +190,7 @@ public class Movement : MonoBehaviour
             if(Physics.Raycast(ray, ground_check_length, ground_layer))
             {
                 IsGround = true;
+                m_IsCanJump = true;
                 return;
             }
         }
@@ -208,12 +233,21 @@ public class Movement : MonoBehaviour
     }
     public void Jump()
     {
-        if(IsGround)
+        if(m_IsCanJump && !m_IsJumping)
         {
             m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
             m_rigidbody.AddForce(transform.up * jump_force, ForceMode.Impulse);
+            StartCoroutine(JumpCDCoroutine());
         }
     }
+
+    private IEnumerator JumpCDCoroutine()
+    {
+        m_IsJumping = true;
+        yield return new WaitForSeconds(m_jump_cd);
+        m_IsJumping = false;
+    }
+
     public void SetMoveDirect(Vector3 direct)
     {
         m_input_direct = direct;

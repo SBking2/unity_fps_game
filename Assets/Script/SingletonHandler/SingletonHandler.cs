@@ -20,6 +20,11 @@ public class SingletonHandler : SingletonAutoMono<SingletonHandler>
         PlayerController.Instance.Update(delta);
     }
 
+    private void LateUpdate()
+    {
+        
+    }
+
     private void OnEnable()
     {
         PlayerController.Instance.OnEnable();

@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum MoveType
+{
+    None = 0,
+    Walk = 1,
+    Run = 2,
+    Crouch = 3
+}
+
 [RequireComponent(typeof(Rigidbody))]
 public class Movement : MonoBehaviour
 {
@@ -54,14 +62,7 @@ public class Movement : MonoBehaviour
     public bool IsGround { get; private set; }
     public bool IsSlope { get; private set; }
     public bool IsCroch { get; private set; }
-    public Vector3 Velocity
-    {
-        get
-        {
-            Vector3 velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
-            return velocity;
-        }
-    }
+    public MoveType Movetype { get; private set; }
 
     /// <summary>
     /// 是否头顶天花板
@@ -93,9 +94,6 @@ public class Movement : MonoBehaviour
         {
             m_jump_timer += delta;
             if (m_jump_timer >= m_jump_cd) m_IsCanJump = false;
-        }else
-        {
-            m_jump_timer = 0.0f;
         }
 
         GroundCheck();
@@ -116,18 +114,29 @@ public class Movement : MonoBehaviour
         float multiplier = IsGround ? 1.0f : air_multiplier;
         float move_force;
         float max_move_speed;
+
         if(IsCroch)
         {
             move_force = crouch_force;
             max_move_speed = max_crouch_speed;
-        }else if(m_IsRunSignal)
+            Movetype = MoveType.Crouch;
+        }
+        else if(m_IsRunSignal)
         {
             move_force = run_force;
             max_move_speed = max_run_speed;
-        }else
+            Movetype = MoveType.Run;
+        }
+        else
         {
             move_force = walk_force;
             max_move_speed = max_walk_speed;
+            Movetype = MoveType.Walk;
+        }
+        
+        if(m_move_direct == Vector3.zero)
+        {
+            Movetype = MoveType.None;
         }
 
         //起跳速度作为空中的最大速度限制
@@ -190,6 +199,7 @@ public class Movement : MonoBehaviour
             if(Physics.Raycast(ray, ground_check_length, ground_layer))
             {
                 IsGround = true;
+                m_jump_timer = 0.0f;
                 m_IsCanJump = true;
                 return;
             }
@@ -244,7 +254,7 @@ public class Movement : MonoBehaviour
     private IEnumerator JumpCDCoroutine()
     {
         m_IsJumping = true;
-        yield return new WaitForSeconds(m_jump_cd);
+        yield return new WaitForSeconds(m_jump_cd + 0.05f);
         m_IsJumping = false;
     }
 

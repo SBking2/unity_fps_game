@@ -8,6 +8,7 @@ public class InputManager : Singleton<InputManager>, EeInput.IPlayerActions
     public UnityAction<Vector2> onMouseDelta;
     public UnityAction<Vector2> onMoveDelta;
     public UnityAction onJump;
+    public UnityAction<bool> onFire;
     public UnityAction<bool> onSprint;
     public UnityAction<bool> onCroch;
 
@@ -63,6 +64,17 @@ public class InputManager : Singleton<InputManager>, EeInput.IPlayerActions
                 onCroch(true);
             else if (context.canceled)
                 onCroch(false);
+        }
+    }
+
+    public void OnFire(UnityEngine.InputSystem.InputAction.CallbackContext context)
+    {
+        if (onFire != null)
+        {
+            if (context.started)
+                onFire(true);
+            else if (context.canceled)
+                onFire(false);
         }
     }
 }

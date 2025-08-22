@@ -277,6 +277,8 @@ public class Movement : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
+        if (m_collider == null) return;
+
         Gizmos.color = Color.green;
         float y = transform.position.y - m_collider.height * transform.localScale.y / 2 ;
         Vector3 pos = transform.position;

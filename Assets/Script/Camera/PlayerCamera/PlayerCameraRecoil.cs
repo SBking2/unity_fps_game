@@ -8,7 +8,7 @@ public class PlayerCameraRecoil
     private float m_recoil_decerleration = 2.0f;
     private float m_recoil_follow_speed = 10.0f;
     private Vector3 m_camera_recoil_amount = new Vector3(5.0f, 3.0f, 0.0f);
-    private float m_shoot_dir_multipiler = 1.5f;    //基于相机偏移的射击方向偏移倍数
+    private float m_shoot_dir_multipiler = 2.0f;    //基于相机偏移的射击方向偏移倍数
     #endregion
 
     private Transform m_camera_recoil_transform;    //后座力导致的镜头偏移

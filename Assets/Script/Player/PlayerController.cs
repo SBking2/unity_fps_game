@@ -26,7 +26,7 @@ public class PlayerController : Singleton<PlayerController>
             GameObject.Find("ShootDir").transform
             , GameObject.Find("WeaponBob").transform
             , GameObject.Find("WeaponSway").transform
-            , LayerMask.GetMask("Default", "Ground")
+            , LayerMask.GetMask("Default", "Ground", "Enemy")
             );
 
         m_player_recoil = new PlayerRecoil(

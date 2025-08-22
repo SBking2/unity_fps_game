@@ -5,7 +5,7 @@ public class PlayerRecoil
 {
     #region model
     private float m_extent_deceleration = 5.0f;
-    private float m_extent_acceleration = 100.0f;
+    private float m_extent_acceleration = 70.0f;
     #endregion
 
     private float m_recoil_extent = 0.0f;   //Recoil的程度，当持续开火时，extent会越来越大，偏移的随机程度会更大

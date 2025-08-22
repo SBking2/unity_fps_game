@@ -54,7 +54,6 @@ public class PlayerWeaponAttack
             hit_effect.transform.rotation = Quaternion.LookRotation(hit.normal);
             ParticleSystem effect = hit_effect.GetComponentInChildren<ParticleSystem>();
             effect.Play();
-            Debug.Log(hit.collider.gameObject.name);
         }
 
         if (onFireEvent != null) onFireEvent(delta);

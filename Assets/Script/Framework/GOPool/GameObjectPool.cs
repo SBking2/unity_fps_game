@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameObjectPool : Singleton<GameObjectPool>
 {
@@ -11,7 +12,7 @@ public class GameObjectPool : Singleton<GameObjectPool>
         m_root = new GameObject("Pool");
     }
 
-    public GameObject GetObj(string name)
+    public GameObject GetObj(string name, UnityAction<GameObject> callback = null)
     {
         if(m_obj_dic.ContainsKey(name))
         {
@@ -20,6 +21,8 @@ public class GameObjectPool : Singleton<GameObjectPool>
                 GameObject obj = m_obj_dic[name].Pop();
                 obj.transform.SetParent(null);
                 obj.SetActive(true);
+
+                callback?.Invoke(obj);
                 return obj;
             }
         }
@@ -27,6 +30,8 @@ public class GameObjectPool : Singleton<GameObjectPool>
         GameObject obj_res = LoadGameObject(name);
         GameObject obj_instance = GameObject.Instantiate(obj_res);
         obj_instance.name = name;
+
+        callback?.Invoke(obj_instance);
         return obj_instance;
     }
 

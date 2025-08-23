@@ -49,11 +49,23 @@ public class PlayerWeaponAttack
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 100.0f, m_attack_layer))
         {
-            GameObject hit_effect =  GameObjectPool.Instance.GetObj("hit_effect");
-            hit_effect.transform.position = hit.point;
-            hit_effect.transform.rotation = Quaternion.LookRotation(hit.normal);
-            ParticleSystem effect = hit_effect.GetComponentInChildren<ParticleSystem>();
-            effect.Play();
+            //特效生成
+            GameObjectPool.Instance.GetObj("hit_effect", (obj)=>
+            {
+                obj.transform.position = hit.point;
+                obj.transform.rotation = Quaternion.LookRotation(hit.normal);
+                ParticleSystem effect = obj.GetComponentInChildren<ParticleSystem>();
+                effect.Play();
+            });
+
+            BattleColliderHandler battle_collider = hit.collider.GetComponentInParent<BattleColliderHandler>();
+            if(battle_collider != null)
+            {
+                DamageInfo info = new DamageInfo();
+                info.SetAttacker(GameObject.Find("Player"));
+                battle_collider.SubmitHit(info, hit);
+            }
+
         }
 
         if (onFireEvent != null) onFireEvent(delta);

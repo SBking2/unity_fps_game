@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class BoneHit : MonoBehaviour
 {
-    [SerializeField] private Animator m_animator;
+    private Animator m_animator;
     private Transform m_spine_transform;
     private Quaternion m_offset;
 
     private void Start()
     {
+        m_animator = GetComponentInChildren<Animator>();
         m_spine_transform = m_animator.GetBoneTransform(HumanBodyBones.Spine);
     }
 

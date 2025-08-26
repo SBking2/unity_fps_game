@@ -1,0 +1,23 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <uie:Toolbar>
+        <uie:ToolbarMenu tabindex="-1" parse-escape-sequences="true" display-tooltip-when-elided="true" text="Assets" name="ToolbarMenu" />
+    </uie:Toolbar>
+    <SplitView>
+        <ui:VisualElement name="left_panel" style="flex-grow: 1;">
+            <SplitView orientation="Vertical">
+                <ui:VisualElement name="inspector-container" style="flex-grow: 1; min-height: 300px;">
+                    <ui:Label tabindex="-1" text="Inspector" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                    <InspectorView />
+                </ui:VisualElement>
+                <ui:VisualElement name="blackboard-container" style="flex-grow: 1;">
+                    <ui:Label tabindex="-1" text="Blackboard" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+                    <ui:IMGUIContainer />
+                </ui:VisualElement>
+            </SplitView>
+        </ui:VisualElement>
+        <ui:VisualElement name="right_panel" style="flex-grow: 1;">
+            <ui:Label tabindex="-1" text="Behaviour Tree" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+            <BehaviourTreeView focusable="true" style="height: 130px; flex-grow: 1;" />
+        </ui:VisualElement>
+    </SplitView>
+</ui:UXML>

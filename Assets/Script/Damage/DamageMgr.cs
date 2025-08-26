@@ -12,5 +12,14 @@ public class DamageMgr : Singleton<DamageMgr>
         {
             
         }
+
+        if(info.Target != null)
+        {
+            ChaState state = info.Target.GetComponent<ChaState>();
+            if(state != null)
+            {
+                state.Hurt(info.Value);
+            }
+        }
     }
 }

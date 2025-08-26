@@ -262,6 +262,12 @@ public class Movement : MonoBehaviour
     {
         m_input_direct = direct;
     }
+
+    public Vector3 GetMoveDirect()
+    {
+        return m_input_direct;
+    }
+
     public void SetCrouch(bool value) { m_IsCrouchSignal = value; }
     public void SetRun(bool value) { m_IsRunSignal = value; }
 

@@ -2,15 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BattleColliderHandler : MonoBehaviour
+public class CombatColliderHandler : MonoBehaviour
 {
     [SerializeField] private GameObject m_owner;
-    [SerializeField] private Animator m_animator;
+    private Animator m_animator;
     [SerializeField] private BoneHit m_bone_hit;
-    [SerializeField] private Transform m_collider_father;
 
     private List<Transform> m_bones = new List<Transform>();
     private List<Transform> m_binds = new List<Transform>();
+
     private List<HumanBodyBones> m_bone_enum = new List<HumanBodyBones>()
     {
         HumanBodyBones.Head,
@@ -28,6 +28,12 @@ public class BattleColliderHandler : MonoBehaviour
         HumanBodyBones.RightLowerLeg,
         HumanBodyBones.RightFoot
     };
+
+    private void Awake()
+    {
+        AnimationController ac = GetComponentInParent<AnimationController>();
+        if (ac != null) m_animator = ac.Animator;
+    }
 
     private void Start()
     {
@@ -67,20 +73,20 @@ public class BattleColliderHandler : MonoBehaviour
 
     private void GetBinds()
     {
-        m_binds.Add(m_collider_father.Find(m_bone_enum[0].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[1].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[2].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[3].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[4].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[5].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[6].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[7].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[8].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[9].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[10].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[11].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[12].ToString()).transform);
-        m_binds.Add(m_collider_father.Find(m_bone_enum[13].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[0].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[1].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[2].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[3].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[4].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[5].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[6].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[7].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[8].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[9].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[10].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[11].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[12].ToString()).transform);
+        m_binds.Add(transform.Find(m_bone_enum[13].ToString()).transform);
     }
 
     public void SubmitHit(DamageInfo damageInfo, RaycastHit hit)

@@ -6,7 +6,7 @@ public class PlayerWeaponRecoil
 {
     #region model
     private Vector3 m_rota_recoil_amount = new Vector3(3.0f, 5.0f, 0.0f);
-    private Vector3 m_pos_recoil_amount = new Vector3(0.01f, 0.01f, 0.02f);
+    private Vector3 m_pos_recoil_amount = new Vector3(0.01f, 0.03f, 0.04f);
     private float m_recoil_decerleration = 5.0f;
     #endregion
 

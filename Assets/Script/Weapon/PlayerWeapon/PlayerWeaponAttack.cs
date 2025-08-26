@@ -58,12 +58,13 @@ public class PlayerWeaponAttack
                 effect.Play();
             });
 
-            BattleColliderHandler battle_collider = hit.collider.GetComponentInParent<BattleColliderHandler>();
-            if(battle_collider != null)
+            CombatColliderHandler combat_collider = hit.collider.GetComponentInParent<CombatColliderHandler>();
+            if(combat_collider != null)
             {
                 DamageInfo info = new DamageInfo();
                 info.SetAttacker(GameObject.Find("Player"));
-                battle_collider.SubmitHit(info, hit);
+                info.SetValue(1);
+                combat_collider.SubmitHit(info, hit);
             }
 
         }

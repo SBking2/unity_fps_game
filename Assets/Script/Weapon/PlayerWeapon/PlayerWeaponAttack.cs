@@ -45,7 +45,7 @@ public class PlayerWeaponAttack
     {
         m_attack_timer = 0.0f;
 
-        Ray ray = new Ray(m_shoot_dir_transform.position, m_shoot_dir_transform.forward);
+        /*Ray ray = new Ray(m_shoot_dir_transform.position, m_shoot_dir_transform.forward);
         RaycastHit hit;
         if(Physics.Raycast(ray, out hit, 100.0f, m_attack_layer))
         {
@@ -67,7 +67,24 @@ public class PlayerWeaponAttack
                 combat_collider.SubmitHit(info, hit);
             }
 
-        }
+        }*/
+
+        //…˙≥……‰œﬂºÏ≤‚
+        DamageInfo info = new DamageInfo();
+        info.SetAttacker(GameObject.Find("Player"));
+        info.SetValue(1);
+
+        HitConifg hit_config = new HitConifg();
+        hit_config.hit_type = HitType.Ray;
+        hit_config.position = m_shoot_dir_transform.position;
+        hit_config.direction = m_shoot_dir_transform.forward;
+        hit_config.ray_length = 100.0f;
+        //hit_config.layer = LayerMask.GetMask("Player");
+        hit_config.target_layer = m_attack_layer;
+        hit_config.life_time = 3.0f;
+        hit_config.is_immediately = true;
+
+        HitMgr.Instance.InitiateHit(info, hit_config);
 
         if (onFireEvent != null) onFireEvent(delta);
     }

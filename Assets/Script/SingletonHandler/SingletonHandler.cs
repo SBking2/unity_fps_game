@@ -12,12 +12,14 @@ public class SingletonHandler : SingletonAutoMono<SingletonHandler>
     {
         InputManager.Instance.Init();
         PlayerController.Instance.Init();
+        HitMgr.Instance.Init();
     }
 
     private void Update()
     {
         float delta = Time.deltaTime;
         PlayerController.Instance.Update(delta);
+        HitMgr.Instance.Update(delta);
     }
 
     private void LateUpdate()

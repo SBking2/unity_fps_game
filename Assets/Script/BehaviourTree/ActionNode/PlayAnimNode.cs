@@ -10,10 +10,10 @@ public class PlayAnimNode : BT.ActionNode
     protected override void OnStart()
     {
         if (black_board.runner == null) return;
-        AnimationController ac = black_board.runner.GetComponent<AnimationController>();
-        if (ac != null)
+        ChaState cs = black_board.runner.GetComponent<ChaState>();
+        if (cs != null)
         {
-            ac.PlayAnim(anim_name, anim_layer, 0.2f, 0.0f);
+            cs.PlayAnim(anim_name, anim_layer, 0.2f, 0.0f);
         }
     }
 

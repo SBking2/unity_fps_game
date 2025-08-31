@@ -21,6 +21,8 @@ public struct HitConifg
     public HitType hit_type;
     public ShapeType shape_type;
 
+    public Transform father_trans;      //Ïë¸úËæµÄtransform
+
     public LayerMask layer;
     public LayerMask target_layer;
 

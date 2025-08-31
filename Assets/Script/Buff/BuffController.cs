@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BuffHandler : MonoBehaviour
+public class BuffController : MonoBehaviour
 {
     private LinkedList<BuffObj> m_buffs = new LinkedList<BuffObj>();
 

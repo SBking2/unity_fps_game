@@ -175,10 +175,11 @@ public class HitMgr : Singleton<HitMgr>
         }
         hit.SetDamageInfo(damage_info);
         hit.Init();
-        hit.transform.SetParent(null, false);
 
-        hit.gameObject.transform.position = config.position;
-        hit.gameObject.transform.rotation = Quaternion.LookRotation(config.direction);
+        hit.gameObject.transform.localPosition = config.position;
+        hit.gameObject.transform.localRotation = Quaternion.LookRotation(config.direction);
+
+        hit.transform.SetParent(config.father_trans, false);    //设置跟随哪个物体
 
         if (config.is_immediately)
             hit.Detecte();

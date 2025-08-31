@@ -11,7 +11,7 @@ public enum MoveType
 }
 
 [RequireComponent(typeof(Rigidbody))]
-public class Movement : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     [Header("Move Property")]
     public float walk_force;

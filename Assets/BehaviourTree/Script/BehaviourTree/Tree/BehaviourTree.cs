@@ -130,7 +130,7 @@ namespace BT
             });
             tree.Bind();
             return tree;
-        }
+        }   //实例化一颗行为树
         public void Bind()
         {
             Traverse(root, (n) =>

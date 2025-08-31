@@ -98,16 +98,16 @@ MonoBehaviour:
   - {fileID: -8425044556924096554}
   - {fileID: 5843468785591528412}
   - {fileID: 5483195504164459987}
-  - {fileID: 384402574880574484}
   - {fileID: -1091216618666926861}
   - {fileID: 6000501444941718641}
   - {fileID: -8016066613113526951}
   - {fileID: 8210364906599188110}
   - {fileID: -4505360634285573286}
+  - {fileID: 4734217763148389117}
   black_board:
     runner: {fileID: 0}
     player: {fileID: 0}
---- !u!114 &384402574880574484
+--- !u!114 &4734217763148389117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,18 +116,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c724667804777f34aac6bbd1843a01ef, type: 3}
-  m_Name: PlayAnimNode
+  m_Script: {fileID: 11500000, guid: a36d30a0c7f225a46bdfead45e6b5247, type: 3}
+  m_Name: CasteSkillNode
   m_EditorClassIdentifier: 
-  state: 1
-  guid: 72688f0c10e9095488474bc0452602b1
-  position: {x: 26.68314, y: 441.59998}
+  state: 0
+  guid: 5cbc01fe2f1dc2449b6a181ccdfec8ed
+  position: {x: 30.400024, y: 441.59998}
   black_board:
     runner: {fileID: 0}
     player: {fileID: 0}
   description: 
-  anim_name: Shoot
-  anim_layer: 1
+  skill: {fileID: 11400000, guid: 91ae50a191952ce46ab3f615fb24e5c9, type: 2}
 --- !u!114 &5483195504164459987
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,14 +141,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   guid: 3ad27957e40eb5b4c9e7d0098db06c56
-  position: {x: 35.199974, y: 241.20001}
+  position: {x: 22.399994, y: 225.6}
   black_board:
     runner: {fileID: 0}
     player: {fileID: 0}
   description: 
   children:
   - {fileID: 8210364906599188110}
-  - {fileID: 384402574880574484}
+  - {fileID: 4734217763148389117}
   - {fileID: -1091216618666926861}
 --- !u!114 &5843468785591528412
 MonoBehaviour:

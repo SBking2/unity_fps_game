@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class PlayerController : Singleton<PlayerController>
 {
     private PlayerCamera m_player_camera;
-    private Movement m_player_movement;
+    private MovementController m_player_movement;
     private PlayerWeaponController m_player_weapon_controller;
     private PlayerRecoil m_player_recoil;
 
@@ -20,7 +20,7 @@ public class PlayerController : Singleton<PlayerController>
             , GameObject.Find("CameraVerticalHandler").transform
             , GameObject.Find("CameraBob").transform);
 
-        m_player_movement = GameObject.Find("Player").GetComponent<Movement>();
+        m_player_movement = GameObject.Find("Player").GetComponent<MovementController>();
 
         m_player_weapon_controller = new PlayerWeaponController(
             GameObject.Find("ShootDir").transform

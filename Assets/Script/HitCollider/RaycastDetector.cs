@@ -6,6 +6,7 @@ using UnityEngine;
 public class RaycastDetector : HitDetector
 {
     private Ray m_ray;
+    private Vector3 point;
 
     public override void Init()
     {
@@ -32,6 +33,8 @@ public class RaycastDetector : HitDetector
                     ParticleSystem effect = obj.GetComponentInChildren<ParticleSystem>();
                     effect.Play();
                 });
+
+                point = hit_info.point;
 
                 CombatColliderHandler combat_collider = hit_info.collider.GetComponentInParent<CombatColliderHandler>();
                 if (combat_collider != null)
@@ -62,6 +65,7 @@ public class RaycastDetector : HitDetector
         Vector3 end = start + hit_config.direction.normalized * hit_config.ray_length;
 
         Gizmos.DrawLine(start, end);
+        Gizmos.DrawWireCube(point, Vector3.one * 0.1f);
     }
 #endif
 }

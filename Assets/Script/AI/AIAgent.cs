@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+/// <summary>
+/// 用于给ChaState下命令
+/// </summary>
 public class AIAgent : MonoBehaviour
 {
     [SerializeField] private BehaviourTree m_behaviour_tree;
@@ -12,12 +15,12 @@ public class AIAgent : MonoBehaviour
     private State m_tree_state = State.Running;
     public BehaviourTree BT { get; private set; }
     private NavMeshAgent m_nav_agent;
-    private Movement m_movement;
+    private ChaState m_chastate;
 
     private void Awake()
     {
         m_nav_agent = GetComponent<NavMeshAgent>();
-        m_movement = GetComponent<Movement>();
+        m_chastate = GetComponent<ChaState>();
     }
 
     private void Start()
@@ -48,13 +51,14 @@ public class AIAgent : MonoBehaviour
         m_nav_agent.SetDestination(target);
         if (m_nav_agent.path.corners.Length > 1.0f)
         {
-            Vector3 dir = (m_nav_agent.path.corners[1] - transform.position).normalized;
-            m_movement.SetMoveDirect(dir);
+            Vector3 next = m_nav_agent.steeringTarget; // 当前路径上的下一个点
+            Vector3 dir = (next - transform.position).normalized;
+            m_chastate.MoveDirect(dir);
         }
     }
 
     public void StopMove()
     {
-        m_movement.SetMoveDirect(Vector3.zero);
+        m_chastate.MoveDirect(Vector3.zero);
     }
 }

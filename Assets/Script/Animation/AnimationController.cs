@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour
 {
     [SerializeField] private Animator m_animator;
-    private Movement m_movement;
+    private MovementController m_movement;
     public Animator Animator { get { return m_animator; } }
 
     private readonly string m_die_state_name = "Die";
@@ -13,7 +13,7 @@ public class AnimationController : MonoBehaviour
 
     private void Awake()
     {
-        m_movement = GetComponent<Movement>();
+        m_movement = GetComponent<MovementController>();
     }
     public void PlayAnim(string anim_name, int anim_layer, float transition_time, float fixed_time)
     {

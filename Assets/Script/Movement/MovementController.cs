@@ -10,7 +10,7 @@ public enum MoveType
     Crouch = 3
 }
 
-[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(CharacterController))]
 public class MovementController : MonoBehaviour
 {
     [Header("Move Property")]
@@ -59,6 +59,10 @@ public class MovementController : MonoBehaviour
     private bool m_IsCanJump;
     private bool m_IsJumping;
 
+    public Vector3 Velocity { get; private set; }
+    public Vector3 YVelocity { get; private set; }
+    public float m_drag;
+
     public bool IsGround { get; private set; }
     public bool IsSlope { get; private set; }
     public bool IsCroch { get; private set; }
@@ -69,13 +73,12 @@ public class MovementController : MonoBehaviour
     /// </summary>
     public bool IsCeiling { get; private set; }
 
-    private Rigidbody m_rigidbody;
-    [SerializeField] private CapsuleCollider m_collider;
+    private CharacterController m_character_controller;
     [SerializeField] private PlayerDebugger m_debugger;
 
     private void Awake()
     {
-        m_rigidbody = GetComponent<Rigidbody>();
+        m_character_controller = GetComponent<CharacterController>();
     }
 
     private void Update()
@@ -84,10 +87,10 @@ public class MovementController : MonoBehaviour
 
         if(IsGround)
         {
-            m_rigidbody.drag = ground_drag;
+            m_drag = ground_drag;
         }else
         {
-            m_rigidbody.drag = 0.0f;
+            m_drag = 0.0f;
         }
 
         if(!IsGround)
@@ -99,14 +102,19 @@ public class MovementController : MonoBehaviour
         GroundCheck();
         SlopeCheck();
         CeilingCheck();
-    }
 
-    private void FixedUpdate()
-    {
-        float delta = Time.fixedDeltaTime;
+        HandleDrag(delta);
         HandleInputMove(delta);
         HandleGravity(delta);
         HandleCrouch(delta);
+
+        m_character_controller.Move(Velocity * delta);
+        m_character_controller.Move(YVelocity * delta);
+    }
+
+    public void HandleDrag(float delta)
+    {
+        Velocity = Vector3.Lerp(Velocity, Vector3.zero, m_drag * delta);
     }
 
     private void HandleInputMove(float delta)
@@ -148,27 +156,28 @@ public class MovementController : MonoBehaviour
         else
             m_move_direct = m_input_direct;
 
-        m_rigidbody.AddForce(m_move_direct.normalized * move_force * multiplier, ForceMode.Force);
+        AddForce(m_move_direct.normalized * move_force * multiplier);
 
-        //速度限制
-        Vector3 velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
-        if(m_debugger != null)  m_debugger.Refreash(velocity.magnitude);
+        if(m_debugger != null)  m_debugger.Refreash(Velocity.magnitude);
         
-        if (velocity.magnitude > m_limit_speed)
+        if (Velocity.magnitude > m_limit_speed)
         {
-            m_rigidbody.velocity = velocity.normalized * m_limit_speed
-                + new Vector3(0.0f, m_rigidbody.velocity.y, 0.0f);
+            Velocity = Velocity.normalized * m_limit_speed;
         }
     }
     private void HandleGravity(float delta)
     {
-        Vector3 force;
         if (!IsGround)
-            force = Vector3.down * m_rigidbody.mass * air_gravity;
+        {
+            YVelocity += Vector3.down * air_gravity * delta;
+        }
         else
-            force = Vector3.down * m_rigidbody.mass * ground_gravity;
-
-        m_rigidbody.AddForce(force, ForceMode.Force);
+        {
+            if(YVelocity.y <= 0.0f)
+            {
+                YVelocity = Vector3.down * ground_gravity;
+            }
+        }
     }
     private void HandleCrouch(float delta)
     {
@@ -186,7 +195,7 @@ public class MovementController : MonoBehaviour
     }
     private void GroundCheck()
     {
-        float y = transform.position.y - m_collider.height * transform.localScale.y / 2;
+        float y = transform.position.y - m_character_controller.height * transform.localScale.y / 2;
         Vector3 check_pos = transform.position;
         check_pos.y = y + 0.1f;
 
@@ -208,7 +217,7 @@ public class MovementController : MonoBehaviour
     }
     private void CeilingCheck()
     {
-        float y = transform.position.y + m_collider.height * transform.localScale.y / 2;
+        float y = transform.position.y + m_character_controller.height * transform.localScale.y / 2;
         Vector3 check_pos = transform.position;
         check_pos.y = y - 0.1f;
 
@@ -228,7 +237,7 @@ public class MovementController : MonoBehaviour
     }
     private void SlopeCheck()
     {
-        float y = transform.position.y - m_collider.height * transform.localScale.y / 2;
+        float y = transform.position.y - m_character_controller.height * transform.localScale.y / 2;
         Vector3 check_pos = transform.position;
         check_pos.y = y;
         Ray ray = new Ray(check_pos, Vector3.down);
@@ -245,29 +254,30 @@ public class MovementController : MonoBehaviour
     {
         if(m_IsCanJump && !m_IsJumping)
         {
-            m_rigidbody.velocity = new Vector3(m_rigidbody.velocity.x, 0.0f, m_rigidbody.velocity.z);
-            m_rigidbody.AddForce(transform.up * jump_force, ForceMode.Impulse);
+            Vector3 yv = YVelocity;
+            yv.y = jump_force;
+            YVelocity = yv;
             StartCoroutine(JumpCDCoroutine());
         }
     }
-
+    public void AddForce(Vector3 force)
+    {
+        Velocity += force * Time.deltaTime;
+    }
     private IEnumerator JumpCDCoroutine()
     {
         m_IsJumping = true;
         yield return new WaitForSeconds(m_jump_cd + 0.05f);
         m_IsJumping = false;
     }
-
     public void SetMoveDirect(Vector3 direct)
     {
         m_input_direct = direct;
     }
-
     public Vector3 GetMoveDirect()
     {
         return m_input_direct;
     }
-
     public void SetCrouch(bool value) { m_IsCrouchSignal = value; }
     public void SetRun(bool value) { m_IsRunSignal = value; }
 
@@ -283,10 +293,10 @@ public class MovementController : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        if (m_collider == null) return;
+        if (m_character_controller == null) return;
 
         Gizmos.color = Color.green;
-        float y = transform.position.y - m_collider.height * transform.localScale.y / 2 ;
+        float y = transform.position.y - m_character_controller.height * transform.localScale.y / 2 ;
         Vector3 pos = transform.position;
         pos.y = y + 0.1f;
 
@@ -304,7 +314,7 @@ public class MovementController : MonoBehaviour
         }
 
         //绘制Ceiling Check
-        y = transform.position.y + m_collider.height * transform.localScale.y / 2;
+        y = transform.position.y + m_character_controller.height * transform.localScale.y / 2;
         pos.y = y - 0.1f;
         GetThreePoint(pos, ground_check_radius, out points);
         for (int i = 0; i < 3; i++)

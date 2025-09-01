@@ -26,7 +26,6 @@ public class SkillScript : Singleton<SkillScript>
 
     private void PlayAnim(TimelineObj time_line_obj, params AnyValue[] args)
     {
-        Debug.Log(Time.time + " PlayAnim");
         AnimationController ac = time_line_obj.caster.GetComponent<AnimationController>();
         ac.PlayAnim(args[0].stringValue, args[1].intValue, args[2].floatValue, args[3].floatValue);
     }

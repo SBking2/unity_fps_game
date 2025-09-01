@@ -8,7 +8,7 @@ using UnityEngine;
 public class PlayerCamera
 {
     #region model
-    private float m_sensity = 10.0f;
+    private float m_sensity = 0.1f;
     private Vector2 m_camera_vertical_limit = new Vector2(-85, 85);
     #endregion
 
@@ -35,10 +35,10 @@ public class PlayerCamera
     private void HandleCamera(float delta)
     {
         Vector3 character_euler = m_player_transform.eulerAngles;
-        character_euler.y += m_mouse_delta.x * m_sensity * delta;
+        character_euler.y += m_mouse_delta.x * m_sensity;
         m_player_transform.rotation = Quaternion.Euler(character_euler);
 
-        m_camera_vertical_angle -= m_mouse_delta.y * m_sensity * delta;
+        m_camera_vertical_angle -= m_mouse_delta.y * m_sensity;
         m_camera_vertical_angle = Mathf.Clamp(m_camera_vertical_angle, m_camera_vertical_limit.x, m_camera_vertical_limit.y);
 
         Vector3 camera_euler = new Vector3(m_camera_vertical_angle, 0.0f, 0.0f);

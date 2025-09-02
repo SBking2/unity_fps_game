@@ -89,16 +89,16 @@ public class CombatColliderHandler : MonoBehaviour
         m_binds.Add(transform.Find(m_bone_enum[13].ToString()).transform);
     }
 
-    public void SubmitHit(DamageInfo damageInfo, RaycastHit hit)
+    public void SubmitHit(DamageInfo damageInfo, GameObject collider, Vector3 normal)
     {
-        var index = FindCollider(hit.collider.transform.parent);
+        var index = FindCollider(collider.transform.parent);
         if(index != null)
         {
             Debug.Log(damageInfo.Attacker.name + "»÷ÖÐÁË" +
             m_bone_enum[index.Value].ToString()
             + "!");
         }
-        m_bone_hit.Hit(hit.normal);
+        m_bone_hit.Hit(normal);
         damageInfo.SetTarget(m_owner);
         DamageMgr.Instance.Submit(damageInfo);
     }

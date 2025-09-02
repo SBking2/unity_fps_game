@@ -25,21 +25,18 @@ public class RaycastDetector : HitDetector
             RaycastHit hit_info;
             if (Physics.Raycast(m_ray, out hit_info, hit_config.ray_length, hit_config.target_layer))
             {
-                //特效
-                GameObjectPool.Instance.GetObj("hit_effect", (obj) =>
+                if (m_hit_event != null)
                 {
-                    obj.transform.position = hit_info.point;
-                    obj.transform.rotation = Quaternion.LookRotation(hit_info.normal);
-                    ParticleSystem effect = obj.GetComponentInChildren<ParticleSystem>();
-                    effect.Play();
-                });
+                    m_hit_event(hit_info.point, hit_info.normal);
+                    print("Debug: ray_hit_event");
+                }
 
                 point = hit_info.point;
 
                 CombatColliderHandler combat_collider = hit_info.collider.GetComponentInParent<CombatColliderHandler>();
                 if (combat_collider != null)
                 {
-                    combat_collider.SubmitHit(m_damage_info, hit_info);
+                    combat_collider.SubmitHit(m_damage_info, hit_info.collider.gameObject, hit_info.normal);
                 }
             }
         }else
@@ -60,7 +57,7 @@ public class RaycastDetector : HitDetector
         Gizmos.color = Color.red;
 
         // 射线起点
-        Vector3 start = hit_config.position;
+        Vector3 start = transform.position;
         // 射线终点
         Vector3 end = start + hit_config.direction.normalized * hit_config.ray_length;
 

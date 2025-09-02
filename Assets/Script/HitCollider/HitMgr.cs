@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.FullSerializer;
@@ -153,7 +154,7 @@ public class HitMgr : Singleton<HitMgr>
         }
     }
 
-    public void InitiateHit(DamageInfo damage_info, HitConifg config)
+    public HitDetector InitiateHit(DamageInfo damage_info, HitConifg config, Action<Vector3, Vector3> callback = null)
     {
         var hit = m_hit_dic[config.hit_type].Pop(config);       //尝试从容器里取
         if(hit == null)
@@ -176,15 +177,13 @@ public class HitMgr : Singleton<HitMgr>
         hit.SetDamageInfo(damage_info);
         hit.Init();
 
-        hit.gameObject.transform.localPosition = config.position;
-        hit.gameObject.transform.localRotation = Quaternion.LookRotation(config.direction);
-
-        hit.transform.SetParent(config.father_trans, false);    //设置跟随哪个物体
+        hit.AddListener(callback);
 
         if (config.is_immediately)
             hit.Detecte();
 
         m_running_hit.Add(hit);
+        return hit;
     }
 
     //TODO:处理tick、immediately等属性
@@ -195,7 +194,7 @@ public class HitMgr : Singleton<HitMgr>
         {
             m_running_hit[i].timer += delta;
 
-            if(m_running_hit[i].timer >= m_running_hit[i].hit_config.life_time)
+            if(m_running_hit[i].timer >= m_running_hit[i].hit_config.life_time && !m_running_hit[i].hit_config.is_forever)
             {
                 m_running_hit[i].transform.SetParent(m_father.transform, false);
                 m_hit_dic[m_running_hit[i].hit_config.hit_type].Push(m_running_hit[i]);     //塞回到池子里面
@@ -217,5 +216,11 @@ public class HitMgr : Singleton<HitMgr>
                 m_running_hit.RemoveAt(m_running_hit.Count - 1);
             }
         }
+    }
+
+    public void PushHit(HitDetector hit_detector)
+    {
+        hit_detector.transform.SetParent(m_father.transform, false);
+        m_hit_dic[hit_detector.hit_config.hit_type].Push(hit_detector);
     }
 }

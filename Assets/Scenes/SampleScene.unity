@@ -2358,6 +2358,37 @@ CapsuleCollider:
   m_Height: 0.56
   m_Direction: 0
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &367494545
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 367494546}
+  m_Layer: 0
+  m_Name: =========Env
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &367494546
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 367494545}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &368669062
 GameObject:
   m_ObjectHideFlags: 0
@@ -5374,7 +5405,7 @@ GameObject:
   - component: {fileID: 1055337790}
   - component: {fileID: 1055337791}
   - component: {fileID: 1055337792}
-  m_Layer: 8
+  m_Layer: 9
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7739,6 +7770,37 @@ Transform:
   m_Children:
   - {fileID: 2086598128}
   m_Father: {fileID: 2038883144}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1740735330
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1740735331}
+  m_Layer: 0
+  m_Name: =========Unsee
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1740735331
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1740735330}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 13.656664, y: 3.11036, z: -315.31958}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799435065
 GameObject:
@@ -11651,6 +11713,7 @@ Animator:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 367494546}
   - {fileID: 963194228}
   - {fileID: 1987048022}
   - {fileID: 2112006606}
@@ -11660,11 +11723,12 @@ SceneRoots:
   - {fileID: 1877554204}
   - {fileID: 1055337789}
   - {fileID: 2038883144}
+  - {fileID: 384965514}
+  - {fileID: 1802089189}
+  - {fileID: 1740735331}
   - {fileID: 1812545444}
   - {fileID: 2142222396}
   - {fileID: 1370013461}
   - {fileID: 710354696}
   - {fileID: 910430370}
   - {fileID: 726289536}
-  - {fileID: 384965514}
-  - {fileID: 1802089189}

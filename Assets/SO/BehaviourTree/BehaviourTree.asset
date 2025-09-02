@@ -79,7 +79,7 @@ MonoBehaviour:
     runner: {fileID: 0}
     player: {fileID: 0}
   description: 
-  duration: 3
+  duration: 0.5
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   state: 0
   guid: 5cbc01fe2f1dc2449b6a181ccdfec8ed
-  position: {x: 30.400024, y: 441.59998}
+  position: {x: 30.399992, y: 441.6}
   black_board:
     runner: {fileID: 0}
     player: {fileID: 0}

@@ -40,7 +40,7 @@ public class SkillScript : Singleton<SkillScript>
             pc.Play();
 
             Bullet bt = obj.GetComponent<Bullet>();
-            bt.Initlize(time_line_obj.caster.transform.forward);
+            bt.Initlize(time_line_obj.caster.transform.forward, time_line_obj.caster);
         });
     }
 

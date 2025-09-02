@@ -84,7 +84,16 @@ public class PlayerWeaponAttack
         hit_config.life_time = 3.0f;
         hit_config.is_immediately = true;
 
-        HitMgr.Instance.InitiateHit(info, hit_config);
+        HitMgr.Instance.InitiateHit(info, hit_config, (point, normal) =>
+        {
+            GameObjectPool.Instance.GetObj("hit_effect", (obj) =>
+            {
+                obj.transform.position = point;
+                obj.transform.rotation = Quaternion.LookRotation(normal);
+                ParticleSystem effect = obj.GetComponentInChildren<ParticleSystem>();
+                effect.Play();
+            });
+        });
 
         if (onFireEvent != null) onFireEvent(delta);
     }

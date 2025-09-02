@@ -15,6 +15,10 @@ public class OverlapDetector : HitDetector
     }
     public override void Detecte()
     {
+        if(m_hit_event != null)
+        {
+            m_hit_event(Vector3.zero, Vector3.zero);
+        }
     }
 
 #if UNITY_EDITOR
@@ -24,18 +28,20 @@ public class OverlapDetector : HitDetector
 
         Gizmos.color = Color.green;
 
+        Gizmos.matrix = Matrix4x4.TRS(transform.position, transform.rotation, Vector3.one);
+
         switch (hit_config.shape_type)
         {
             case ShapeType.Sphere:
-                Gizmos.DrawWireSphere(hit_config.position, hit_config.raidus);
+                Gizmos.DrawWireSphere(Vector3.zero, hit_config.raidus);
                 break;
             case ShapeType.Box:
-                Gizmos.DrawWireCube(hit_config.position, hit_config.size);
+                Gizmos.DrawWireCube(Vector3.zero, hit_config.size);
                 break;
 
             case ShapeType.Capsule:
-                Vector3 top = hit_config.position + Vector3.up * (hit_config.height / 2f);
-                Vector3 bottom = hit_config.position - Vector3.up * (hit_config.height / 2f);
+                Vector3 top = Vector3.zero + Vector3.up * (hit_config.height / 2f);
+                Vector3 bottom = Vector3.zero - Vector3.up * (hit_config.height / 2f);
 
                 Gizmos.DrawWireSphere(top, hit_config.raidus);
                 Gizmos.DrawWireSphere(bottom, hit_config.raidus);

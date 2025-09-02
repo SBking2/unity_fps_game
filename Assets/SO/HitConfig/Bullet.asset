@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08ec9f3880f64bd4cabe9b067bf66c2e, type: 3}
+  m_Name: Bullet
+  m_EditorClassIdentifier: 
+  config:
+    hit_type: 2
+    shape_type: 2
+    father_trans: {fileID: 0}
+    layer:
+      serializedVersion: 2
+      m_Bits: 1024
+    target_layer:
+      serializedVersion: 2
+      m_Bits: 512
+    life_time: 0
+    tick_time: 0
+    is_immediately: 0
+    is_forever: 1
+    is_only_once: 0
+    direction: {x: 0, y: -1, z: 0}
+    ray_length: 0
+    is_cast_all: 0
+    position: {x: 0, y: 0, z: 0}
+    raidus: 0.2
+    size: {x: 0, y: 0, z: 0}
+    height: 2.8

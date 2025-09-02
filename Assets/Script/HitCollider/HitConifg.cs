@@ -16,6 +16,7 @@ public enum ShapeType
     Capsule
 }
 
+[System.Serializable]
 public struct HitConifg
 {
     public HitType hit_type;
@@ -29,6 +30,7 @@ public struct HitConifg
     public float life_time;
     public float tick_time;
     public bool is_immediately;
+    public bool is_forever;
     public bool is_only_once;
 
     //Ray
